@@ -1,20 +1,19 @@
 // Problema do Caixeiro Viajante (PCV)
+// Algoritmos Construtivos https://drive.google.com/file/d/1g1upO5FIZ7BTnwYGBjEm9LOetNSHKn4m/view
+// Algoritmos de Busca Local https://drive.google.com/file/d/1aWgKoE3RIlQmPf7JAHQz_1zdKvcl88Iu/view
+#include "metaheuristics.h"
 
-// Nearest Neighbour Heristic (NNH)
-// Algoritmo do vizinho mais proximo
-
-#include "grafo.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#define POS_INICIAL 0
-#define LIVRE 0
-#define USO 1
+/*
+ALGORITMO CONSTRUTIVO
+Nearest Neighbour Heristic (NNH)
+Algoritmo do vizinho mais proximo
+*/ 
 
-void nnh(tGrafo g){
-    int n = getN(g); // define o numero de vertices do grafo
-    int ** ma = getMatrizAdjacencias(g); // define a matriz de distancias
+void nnh(int ** md, int n){
     int custo = 0; // inicializa o custo da solucao
     int solution[n+1]; // vetor com as solucoes
 
@@ -27,18 +26,14 @@ void nnh(tGrafo g){
     solution[n] = POS_INICIAL; // adiciona o mesmo ao final da solucao para fechar o ciclo
     options[0] = USO; // remove o vertice das opções
     
-    
-
-
-
     int origem = POS_INICIAL; // define a origem para ver qual proximo vertice destino
     for(int i = 1; i < n; i++){ // i representa qual casa da solucao estamos adicionando
         int dist = (int) INFINITY;  // dist é a menor distancia da origem aos demais
         int dest;                   // dest é o melhor destino
         for(int j = 0; j < n; j++){ 
             if(origem != j && options[j] == LIVRE){ // verifica se o vertice destino é valido
-                if(ma[origem][j] <= dist){ // verifica se a distancia é melhor ate o momento
-                    dist = ma[origem][j]; // atualiza a menor distancia
+                if(md[origem][j] <= dist){ // verifica se a distancia é melhor ate o momento
+                    dist = md[origem][j]; // atualiza a menor distancia
                     dest = j;             // atualiza o melhor destino
                 }
             }
@@ -49,12 +44,25 @@ void nnh(tGrafo g){
         custo += dist; // calcula o custo da solucao
     }
 
-    custo += ma[solution[n-1]][POS_INICIAL]; // adiciona o custo de retornar ao ponto inicial
+    custo += md[solution[n-1]][POS_INICIAL]; // adiciona o custo de retornar ao ponto inicial
 
 
-    printf("\nNNH solution: (%d", solution[0]+1);
+    printf("NNH solution: (%d", solution[0]+1);
     for(int i = 1; i <= n; i++){
         printf(", %d", solution[i]+1);
     }
     printf(") cost (%d)\n", custo);
 }
+
+void nnh_backtracking(int ** matriz_dist, int n){
+    //imprlementar o mesmo codigo a cima com backtracking
+    printf("nnh_backtracking solution: ");
+}
+
+
+void insercao_mais_proxima(int ** matriz_dist, int n){
+    // criar ciclo tam 3
+    printf("insercao_mais_proxima solution: ");
+}
+
+void insercao
